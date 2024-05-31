@@ -1,0 +1,55 @@
+{% extends 'common.html' %}
+
+{% load static %}
+ 
+{% block title %}List Product {% endblock %}
+
+{% block styles %}  <link rel="stylesheet" href="{% static 'product_list.css' %}">  {% endblock %}
+
+{% block content %}
+
+  
+<form action="{% url 'list' %}" method="get"> 
+
+    <input type="text" id="search" name="query" placeholder="Search products....." required>
+        
+    <button type="submit" class="btn btn-outline-success">Search</button>
+  
+  </form>
+
+  {% if search %}
+  <div class="product-grid">
+  {% for product in page_obj %}
+       
+  <div class="product-card">
+          
+          <div class="product-tumb">
+
+            {% if product.image %}
+            <img src="{{ product.image.url }}" style="height: 300px;width:300px;" alt="no image">
+            {% endif %}
+          </div>
+          <div class="product-details">
+            <span class="product-catagory">Pots</span>
+            <h4><a href="{% url 'product_detail' pk=product.pk %}">{{ product.name }}</a></h4>
+            <p>{{ product.description }} </p>
+            <div class="product-bottom-details">
+              <div class="product-price"><small>{{ product.orginal_price }}</small>
+                {{ product.discounted_price }}
+              </div>
+              <div class="product-links">
+                <a href=""><i class="fa fa-heart"></i></a>
+                <a href=""><i class="fa fa-shopping-cart"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+  {% endfor %}
+</div>
+{% else %}
+<p>No products</p>
+{% endif %} 
+
+
+    {% endblock %}
+ 

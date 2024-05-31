@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Razorpay Payment</title>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+ 
+</head>
+<body>
+   
+    
+  
+    <h1>Razorpay Payment</h1>
+    <p>Product Name: {{ product.name }}</p>
+    <p>Product Description: {{ product.description }}</p>
+    <p>Price: {{product.discounted_price}}</p>
+
+
+    <form id="payment-form"  method="get"  action="{% url 'payment' product.pk %}">
+
+        <input type="hidden" id="amount" value="{{ razorpay_amount }}">
+        <input type="hidden" id="currency" value="{{ currency }}">
+        <input type="hidden" id="order_id" value="{{ razorpay_order_id }}">
+    
+        <button id="rzp-button">Pay Now</button>
+    </form>
+
+    
+<script>
+    document.getElementById('rzp-button').onclick = function (e) {
+        var amount = document.getElementById("amount").value;
+        var currency = document.getElementById("currency").value;
+        var order_id = document.getElementById("order_id").value;
+        var callback_url = "http://" + "127.0.0.1:8000"+"{% url 'payment_success' %}";
+         
+
+        var options = {
+            key: "rzp_test_jBCI7CmPTKbPgK",
+            amount: amount,
+            currency: currency,
+            order_id: order_id,
+            callback_url: "{{ callback_url }}",
+           
+            handler: function(response) {
+                 
+                console.log(response);
+
+                window.location.href = callback_url;
+            },
+            
+        };
+
+        var rzp = new Razorpay(options);
+        rzp.open();
+        e.preventDefault();
+    };
+</script>
+</body>
+</html>

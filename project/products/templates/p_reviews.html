@@ -1,0 +1,42 @@
+{% extends 'common.html' %}
+
+{% load static %}
+ 
+{% block title %} ADD REVIEW {% endblock %}
+
+{% block content %}
+
+
+<form action="{% url 'comment' product.pk %}" method="post">
+
+    
+    {% if messages %}
+
+    {% for message in messages %}
+
+    {{message}}
+
+    {% endfor %}
+
+    {% endif %}
+
+  {% csrf_token %}
+
+
+  
+
+ <label for="review_text">Review:</label>
+  <input type="text" name="comment">
+
+  <!-- <label for="image">Related Image:</label>
+  <input type="file" id="image" name="r_image">
+ --> 
+   
+ <button type="submit">Comment</button>
+
+</form>
+
+
+{% endblock %}
+
+ 

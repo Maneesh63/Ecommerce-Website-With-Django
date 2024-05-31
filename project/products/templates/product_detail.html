@@ -1,0 +1,93 @@
+{% extends 'common.html' %}
+
+{% load static %}
+ 
+{% block title %} Product Detail {% endblock %}
+
+{% block styles %}  <link rel="stylesheet" href="{% static 'product_detail.css' %}">  {% endblock %}
+{% block content %}
+
+{% if product %}
+ 
+<div class="product-card">
+        
+        <div class="product-tumb">
+
+          {% if product.image %}
+          <img src="{{ product.image.url }}" style="height: 300px;width:300px;" alt="no image">
+          {% endif %}
+        </div>
+        <div class="product-details">
+          <span class="product-catagory">Pots</span>
+          <h4><a href="{% url 'product_detail' pk=product.pk %}">{{ product.name }}</a></h4>
+          <p>{{ product.description }} </p>
+          <div class="product-bottom-details">
+            <div class="product-price"><small>{{ product.orginal_price }}</small>
+              {{ product.discounted_price }}
+            </div>
+            <div class="product-links">
+
+               
+ {% if product.user == request.user %}
+
+ <a href="{% url 'edit_product' pk=product.pk %}"><i class="fas fa-edit"></i></a>
+
+<a href="{% url 'delete_product' pk=product.pk %}"><i class="fa-solid fa-trash"></i></a>
+
+{% endif %}
+
+              <a href="{% url 'payment' pk=product.pk %}">Buy</a>
+
+              <a href="{% url 'add_cart' product.pk %}"><i class="fa fa-shopping-cart"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+ 
+ 
+<form action="{% url 'comment' product.pk %}" method="post">
+
+    
+  {% if messages %}
+
+  {% for message in messages %}
+
+  {{message}}
+
+  {% endfor %}
+
+  {% endif %}
+
+{% csrf_token %}
+
+
+
+
+<label for="review_text">Review:</label>
+<input type="text" name="comment">
+
+<!-- <label for="image">Related Image:</label>
+<input type="file" id="image" name="r_image">
+--> 
+ 
+<button type="submit">Post</button>
+
+</form>
+
+    <div><a href="{% url 'comment' product.pk %}"></a></div>
+     
+       {% if product.comments.all %}
+
+         {% for comments in product.comments.all %}
+
+            <li>{{comments.comment}}</li>
+
+         {% endfor %}
+
+       {% endif %}
+
+   
+ {% endif %}
+ 
+
+{% endblock %}

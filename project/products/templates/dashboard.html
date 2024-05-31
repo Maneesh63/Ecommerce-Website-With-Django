@@ -1,0 +1,73 @@
+{% extends 'common.html' %}
+
+{% load static %}
+ 
+{% block title %}Dashboard{% endblock %}
+
+
+{% block styles %} 
+
+<link rel="stylesheet" href="{% static 'dashboard.css' %}"> 
+
+{% endblock %}
+
+{% block content %}
+
+ 
+{% if messages %}
+
+{% for message in messages %}
+
+{{message}}
+
+{% endfor %}
+
+{% endif %}
+
+  {% if user %}
+
+<p>{{ user.username }}</p>
+
+  <p>{{ user.email }}</p>
+
+ {% endif %}
+
+ 
+{% if request.user %}
+
+<li ><a href="{% url 'edit_dashboard' %}"><i class="fas fa-edit"></i>Edit</a></li>
+
+<li><a href="{% url 'logout' %}"><i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
+{% endif %}
+{% if product %}
+<div class="product-grid">
+    {% for products in product %}
+    <div class="product-card">
+        <div class="product-tumb">
+            {% if products.image %}
+            <img src="{{ products.image.url }}" style="height: 300px;width:300px;" alt="No image">
+            {% endif %}
+        </div>
+        <div class="product-details">
+            <span class="product-catagory">Pots</span>
+            <h4><a href="{% url 'product_detail' pk=products.pk %}">{{ products.name }}</a></h4>
+            <p>{{ products.description }}</p>
+            <div class="product-bottom-details">
+              <div class="product-price">
+                 
+                <small>{{ products.discounted_price }}</small>
+                <span>{{products.orginal_price }}</span>
+            </div>
+                <div class="product-links">
+                     
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+
+ {% endblock %}

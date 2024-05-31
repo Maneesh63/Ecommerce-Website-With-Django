@@ -1,0 +1,76 @@
+{% extends 'common.html' %}
+
+{% load static %}
+    
+{% block title %}Create ProductP{% endblock %}
+
+   {% block styles %} 
+
+   <link rel="stylesheet" href="{% static 'create.css' %}">
+
+{% endblock %}
+
+{% block content %}
+
+    <form method="post" action="{% url 'create_product' %}"  enctype="multipart/form-data">
+
+        {% if messages %}
+
+        {% for message in messages %}
+
+        {{message}}
+
+        {% endfor %}
+
+        {% endif %}
+
+      {% csrf_token %}
+
+    
+      <label for="name">Title:</label>
+      <input type="text" id="name" name="name"><br><br>
+  
+      <label for="description">Description:</label><br>
+      <textarea id="description" name="description" rows="4" cols="50"></textarea><br><br>
+  
+      <label for="image">Image URL:</label>
+      <input type="file" id="image" name="image"><br><br>
+       
+      <label for="orginal_price">Price:</label>
+      <input type="number" id="price" name="orginal_price" step="0.01"><br><br>
+
+      <label for="discounted_price">Discounted Price:</label>
+      <input type="number" id="discounted_price" name="discounted_price" step="0.01"><br><br> 
+  
+
+      <button type="submit">submit</button>
+
+
+    </form>
+
+    <img id="image-preview" src="#" alt="image" style="display: none; max-width:300px;">
+  
+    <script>
+ 
+        document.querySelector('input[type="file"]').addEventListener('change',
+        
+        function (event){
+            var file=event.target.files[0];
+
+            var reader=new FileReader();
+
+            reader.onload=function(trigger){
+
+                var img=document.getElementById('image-preview');
+
+                img.src=trigger.target.result;
+
+                img.style.display='block'
+                                     }
+
+                reader.readAsDataURL(file);
+        } );
+
+    </script>
+
+{% endblock %}

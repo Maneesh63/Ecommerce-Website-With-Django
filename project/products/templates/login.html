@@ -1,0 +1,67 @@
+{% extends 'common.html' %}
+
+{% load static %}
+
+
+{% block title %} Login  {% endblock %}
+
+
+{% block styles %}
+    <link rel="stylesheet" href="{% static 'login.css' %}">
+{% endblock %}
+
+{% block content %}
+
+    <form method="post" class="was-validated"  action="{% url 'login' %}">
+
+        {% if messages %}
+
+        {% for message in messages %}
+
+        {{message}}
+
+        {% endfor %}
+
+        {% endif %}
+
+      {% csrf_token %}
+
+      <label class="form-label" for="email">Email</label><br>
+      <input type="email" class="form-control" name="email" required><br>
+
+      <label class="form-label" for="password">Password</label><br>    
+      <input  class="form-control" id="password" type="password" name="password" required><br>
+      
+      <div class="mb-3 form-check">
+        <input type="checkbox" class="form-check-input" id="showPassword" onclick="showPassword()">
+        <label class="form-check-label" for="showPassword">Show Password</label><br>
+    </div>
+
+      <button type="submit" class="btn btn-primary">Submit</button>
+
+      <li class="fp"><a href="{% url 'forgot_password' %}">Forgot password</a></li>
+      
+      <div class="sig"> 
+      <p>Dont have an Account ?</p>
+      <a class="sign" href="{% url 'signup' %}">Signup</a>
+      </div>
+ 
+    </form>
+
+    <script>
+
+      function showpassword(){
+
+        var pas=document.getElementById('password');
+
+        if (pas.type === 'password'){
+          pas.type = 'text';
+
+        } else{
+          pas.type ='password';
+        }
+      }
+      
+
+    </script>
+  {% endblock %}

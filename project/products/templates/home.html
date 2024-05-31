@@ -1,0 +1,94 @@
+{% extends 'common.html' %}
+
+{% load static %}
+ 
+{% block title %}HOME{% endblock %}
+
+{% block styles %} <link rel="stylesheet" href="{% static 'home.css' %}">{% endblock %}
+  
+{% block content %}
+
+   {% if messages %}
+
+      {% for message in messages %}
+
+      {{message}}
+
+     {% endfor %}
+
+   {% endif %}
+
+
+  <!--FOR LISTING PRODUCTS--> 
+  
+  
+ <form action="{% url 'home' %}" method="get"> 
+
+  <input type="text" id="search" name="query" placeholder="Search products....." required>
+      
+  <button type="submit" class="btn btn-outline-success">Search</button>
+
+</form>
+          
+  <ul>
+ 
+  
+    {% if search %}
+    <div class="product-grid">
+        {% for product in page_obj %}
+             
+        <div class="product-card">
+                
+                <div class="product-tumb">
+
+                  {% if product.image %}
+                  <img src="{{ product.image.url }}" style="height: 300px;width:300px;" alt="No image">
+                  {% endif %}
+                </div>
+                <div class="product-details">
+                  <span class="product-catagory">Pots</span>
+                  <h4><a href="{% url 'product_detail' pk=product.pk %}">{{ product.name }}</a></h4>
+                  <p>{{ product.description }} </p>
+                  <div class="product-bottom-details">
+                    <div class="product-price"><small>{{ product.orginal_price }}</small>{{ product.discounted_price }}</div>
+                    <div class="product-links">
+                      
+                    </div>
+                  </div>
+                </div>
+              </div>
+        {% endfor %}
+    </div>
+    {% endif %} 
+
+    
+<div class="pagin">
+
+  <nav aria-label=". . .">
+  
+      <ul class="pagination">
+       
+  
+           <!--.has_previous is a default attribute provided by django page-->
+          {% if page_obj.has_previous %}
+                                     
+          <li class="page-item">  <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a></li>
+  
+        {% endif %}
+  
+         <!--.has_next is a default attribute provided by django page-->
+        {% if page_obj.has_next %}
+  
+        <li class="page-item"><a class="page-link" href="?page=1">1</a></li>
+        <li class="page-item"><a class="page-link" href="?page=2">2</a></li>
+        <li class="page-item"><a class="page-link" href="?page=3">3</a></li>
+  
+        <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">NEXT</a>
+      </li>
+    </ul>
+  </nav>
+  
+  </div>
+  {% endif %}
+           
+{% endblock %}
