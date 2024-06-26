@@ -6,20 +6,16 @@
     <title>Document</title>
 </head>
 <body>
-    <form method="post" action="{% url 'address' product.pk %}">
+    <form method="post" action="{% url 'address' %}">
      
         
 
 
         {% csrf_token %}
 
-        {% if product %}
-
-        {{product.discounted_price}}
-
-        {% endif %}
- 
         
+ 
+ <!--       
         <label for="id_address">Address:</label><br>
         <input type="text" id="id_address" name="address"><br>
         
@@ -31,7 +27,9 @@
         
         <label for="id_city">City:</label><br>
         <input type="text" id="id_city" name="city"><br>
-    
+    -->
+          {{ form.as_p }}
+
         <button id="address" type="submit">Continue</button>
 
     </form>

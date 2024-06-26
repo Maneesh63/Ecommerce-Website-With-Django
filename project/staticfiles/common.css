@@ -105,6 +105,10 @@ nav ul li a:hover{
 }
 
 
+.highlight {
+    font-weight: bold;
+    background-color: yellow;
+}
 @media screen and (max-width: 1200px) {
     #desktop-nav{
         display: none;
@@ -115,4 +119,18 @@ nav ul li a:hover{
 
     *{
         font-family:Verdana, Geneva, Tahoma, sans-serif;}
+
+        .menu-links ul li a{
+            text-decoration: none;
+            list-style: none;
+        }
+
+        nav ul li a{
+            text-decoration: none;
+        }
+
+        .menu-links{
+            text-decoration: none;
+            list-style: none;
+        }
 }

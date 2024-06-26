@@ -1,0 +1,48 @@
+{% extends 'common.html' %}
+
+{% load static %}
+ 
+{% block title %}Category{% endblock %}
+
+{% block styles %}
+ 
+<style>
+    .category-card {
+        border: 1px solid #e3e3e3;
+        background-color: rgb(255, 255, 255);
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+        text-align: center;
+        padding: 20px;
+    }
+    .category-card a {
+        text-decoration: none;
+        color: #333;
+        font-size: 18px;
+        font-weight: bold;
+    }
+    .category-card a:hover {
+        color: #007bff;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h3>Categories</h3>
+    <div class="row">
+        {% for category in categories %}
+        <div class="col-md-4">
+            <div class="category-card">
+                <a href="{% url 'list_products_by_category' category.id %}">
+                    {{ category.name }}
+                </a>
+                <a href="{% url 'delete_category' pk=category.pk %}"><i class="fa-solid fa-trash"></i></a>
+ 
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

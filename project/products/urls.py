@@ -20,8 +20,13 @@ urlpatterns=[
     path('edit_product/<int:pk>/',views.edit_product,name='edit_product'),
 
     path('delete_product/<int:pk>/',views.delete_product,name='delete_product'),
+   
+   #here im providing multiple url to same function
+   #url 1 for listing products
+    path('list/',views.list_product, name='list'),
 
-    path('list/',views.list_product,name='list'),
+#url 2 for category wise listing
+    #path('list/category/<int:pk>/',views.list_product,name='category_products'),
 
     path('product_detail/<int:pk>/',views.product_detail,name='product_detail'),
 
@@ -41,13 +46,31 @@ urlpatterns=[
     
     path('comment/<int:pk>/',views.comment,name='comment'),
 
-    path('address/<int:pk>/',views.address,name='address'),
+    path('address/',views.address,name='address'),
+
+    #path('order_details/',views.order_details,name='order_details'),
 
     path('payment/<int:pk>/',views.initiate_payment,name='payment'),
 
     path('payment/success/', views.paymenthandler,name='payment_success'),
     
-    path('common/',views.common,name='common'),
+    #path('common/',views.common,name='common'),
+
+     path('create_order/', views.create_order, name='create_order'),
+
+     path('create_category/',views.create_category,name='create_category'),
+
+     path('category',views.list_category,name='category'),
+
+     path('delete_category/<int:pk>',views.delete_category,name='delete_category'),
+
+      path('categories/<int:pk>/products/',views.list_product_by_category, name='list_products_by_category'),
+        
+     #path('redirect_to_address/', views.redirect_to_address, name='redirect_to_address'),
+      
+      path('order_detail/<int:pk>/', views.order_detail, name='order_detail'),
+    
+     path('order_history/', views.order_history, name='order_history'),
 ]
 
     

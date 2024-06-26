@@ -1,0 +1,54 @@
+{% extends 'common.html' %}
+
+{% load static %}
+ 
+{% block title %}{{category.name}}{% endblock %}
+
+{% block styles %} <link rel="stylesheet" href="{% static 'list_category_product.css' %}">{% endblock %}
+  
+{% block content %}
+
+   {% if messages %}
+
+      {% for message in messages %}
+
+      {{message}}
+
+     {% endfor %}
+
+   {% endif %}
+{% if category %}
+
+ 
+
+<div class="product-grid">
+        {% for product in products %}
+ 
+        <div class="card">
+            {% if product.image %}
+            <img src="{{ product.image.url }}"  alt="Not Available">
+            {% endif %}
+      
+            <a href="{% url 'product_detail' product.pk %}">
+            <div class="content">
+                <div class="title">{{ product.name }}</div>
+                <div class="price">{{ product.discounted_price }}</div>
+                <div class="description">{{ product.description }}</div>
+                <div class="rating">
+                    <span class="star">⭐</span>
+                    <span>4.5</span>
+                </div>
+                <a href="{% url 'add_cart' product.pk %}" class="add-to-cart">Add to Cart</a>
+            </div>
+        </div>
+
+        {% endfor %}
+ </div>
+
+{% else %}
+
+<p>No products available on {{category.name}}</p>
+
+{% endif %}
+
+{% endblock %}

@@ -12,6 +12,7 @@
 
 {% block content %}
 
+<div class="fm">
     <form method="post" class="was-validated"  action="{% url 'login' %}">
 
         {% if messages %}
@@ -47,7 +48,7 @@
       </div>
  
     </form>
-
+</div>
     <script>
 
       function showpassword(){

@@ -39,32 +39,32 @@
 
 <li><a href="{% url 'logout' %}"><i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
 {% endif %}
+
+
 {% if product %}
+
 <div class="product-grid">
     {% for products in product %}
-    <div class="product-card">
-        <div class="product-tumb">
-            {% if products.image %}
-            <img src="{{ products.image.url }}" style="height: 300px;width:300px;" alt="No image">
-            {% endif %}
-        </div>
-        <div class="product-details">
-            <span class="product-catagory">Pots</span>
-            <h4><a href="{% url 'product_detail' pk=products.pk %}">{{ products.name }}</a></h4>
-            <p>{{ products.description }}</p>
-            <div class="product-bottom-details">
-              <div class="product-price">
-                 
-                <small>{{ products.discounted_price }}</small>
-                <span>{{products.orginal_price }}</span>
+      
+   
+    <div class="card">
+        {% if products.image %}
+        <img src="{{ products.image.url }}"  alt="Not Available">
+        {% endif %}
+  
+        <a href="{% url 'product_detail' products.pk %}">
+        <div class="content">
+            <div class="title">{{ products.name }}</div>
+            <div class="price">{{ products.discounted_price }}</div>
+            <div class="description">{{ products.description }}</div>
+            <div class="rating">
+                <span class="star">⭐</span>
+                <span>4.5</span>
             </div>
-                <div class="product-links">
-                     
-                    
-                </div>
-            </div>
+            <a href="{% url 'add_cart' products.pk %}" class="add-to-cart">Add to Cart</a>
         </div>
     </div>
+  
     {% endfor %}
 </div>
 {% endif %}

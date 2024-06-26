@@ -7,49 +7,93 @@
 {% block styles %}  <link rel="stylesheet" href="{% static 'product_list.css' %}">  {% endblock %}
 
 {% block content %}
-
-  
+ 
+ 
+<!--Search bar-->
 <form action="{% url 'list' %}" method="get"> 
 
-    <input type="text" id="search" name="query" placeholder="Search products....." required>
-        
-    <button type="submit" class="btn btn-outline-success">Search</button>
-  
-  </form>
-
-  {% if search %}
-  <div class="product-grid">
-  {% for product in page_obj %}
-       
-  <div class="product-card">
-          
-          <div class="product-tumb">
-
-            {% if product.image %}
-            <img src="{{ product.image.url }}" style="height: 300px;width:300px;" alt="no image">
-            {% endif %}
-          </div>
-          <div class="product-details">
-            <span class="product-catagory">Pots</span>
-            <h4><a href="{% url 'product_detail' pk=product.pk %}">{{ product.name }}</a></h4>
-            <p>{{ product.description }} </p>
-            <div class="product-bottom-details">
-              <div class="product-price"><small>{{ product.orginal_price }}</small>
-                {{ product.discounted_price }}
-              </div>
-              <div class="product-links">
-                <a href=""><i class="fa fa-heart"></i></a>
-                <a href=""><i class="fa fa-shopping-cart"></i></a>
-              </div>
-            </div>
-          </div>
-        </div>
-  {% endfor %}
+  <div class="container h-100">
+ 
+  <div class="d-flex justify-content-center h-100">
+<div class="search">
+<input class="search_input" type="text" name="query" placeholder="Search products....." required>
+    
+<button class="search_icon"><i class="fa fa-search"></i></button>
+</form>
 </div>
+</div>
+</div>
+
+ <div class="master">
+
+  {% if products %}
+  
+  <div class="product-grid">
+  
+    {% for product in page_obj %}
+
+     
+   
+    <div class="card">
+      {% if product.image %}
+      <img src="{{ product.image.url }}"  alt="Not Available">
+      {% endif %}
+
+      <a href="{% url 'product_detail' product.pk %}">
+      <div class="content">
+          <div class="title">{{ product.name }}</div>
+          <div class="price">{{ product.discounted_price }}</div>
+          <div class="description">{{ product.description }}</div>
+          <div class="rating">
+              <span class="star">⭐</span>
+              <span>4.5</span>
+          </div>
+          <a href="{% url 'add_cart' product.pk %}" class="add-to-cart">Add to Cart</a>
+      </div>
+  </div>
+
+
+  {% endfor %}
+
+</div>
+ </div>
 {% else %}
 <p>No products</p>
 {% endif %} 
+ </div>
 
+     
+<div class="pagin">
+
+  <nav aria-label=". . .">
+  
+      <ul class="pagination">
+       
+  
+           <!--.has_previous is a default attribute provided by django page-->
+          {% if page_obj.has_previous %}
+                                     
+          <li class="page-item">  <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a></li>
+  
+        {% endif %}
+  
+         <!--.has_next is a default attribute provided by django page-->
+        {% if page_obj.has_next %}
+  
+        <li class="page-item"><a class="page-link" href="?page=1">1</a></li>
+        <li class="page-item"><a class="page-link" href="?page=2">2</a></li>
+        <li class="page-item"><a class="page-link" href="?page=3">3</a></li>
+  
+        <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">NEXT</a>
+      </li>
+    </ul>
+  </nav>
+  {% endif %}
+  </div>
 
     {% endblock %}
+
+
+
+    
  

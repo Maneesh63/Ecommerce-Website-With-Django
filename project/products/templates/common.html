@@ -32,25 +32,25 @@
      
 </head>
 <body>
-  
+  <div class="tp">
     <nav id="desktop-nav">
         <a class="logo"  href="{% url 'home' %}"><div >Potcart</div></a>
         <ul class="nav-links">
-            <li><a href="{% url 'list' %}">Products</a></li>
-            <li><a href="#">Categories</a></li>
-            <li><a href="{% url 'cart' %}"><i class="fa-solid fa-cart-shopping"></i> Cart</a></li>
+           
+            <li><a href="{% url 'category' %}">Categories</a></li>
+            <li><a href="{% url 'cart' %}"><i class="fa-solid fa-cart-shopping"></i></a></li>
              
             {% if not user.is_authenticated %}
 
             <li><a href="{% url 'login' %}">Login</a></li>
             {% else %}
 
-           <li><a href="{% url 'dashboard'%}"><i class="fa-solid fa-user">AT</i></a></li>
+           <li><a href="{% url 'dashboard'%}"><i class="fa-solid fa-user"></i></a></li>
             {% endif %}
  </ul>
     </nav>
 
-     
+  </div>  
 
     <nav id="hamburger-nav">
         <a class="logo"  href="{% url 'home' %}"><div >Potcart</div></a>

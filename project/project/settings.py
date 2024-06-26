@@ -146,7 +146,7 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'maneeshmaneesh391@gmail.com'  
-EMAIL_HOST_PASSWORD = 'gcit jbsa iweb oknr ' 
+EMAIL_HOST_PASSWORD = 'gcit jbsa iweb oknr' 
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
@@ -158,6 +158,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
+     BASE_DIR / "static",
 ]
 
 

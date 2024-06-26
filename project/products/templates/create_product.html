@@ -6,7 +6,7 @@
 
    {% block styles %} 
 
-   <link rel="stylesheet" href="{% static 'create.css' %}">
+   <link rel="stylesheet" href="{% static 'create_product.css' %}">
 
 {% endblock %}
 
@@ -25,7 +25,14 @@
         {% endif %}
 
       {% csrf_token %}
-
+  <div class="container">     
+      <label for="category">Category:</label>
+      <select name="category" id="category">
+        {% for category in categories %}
+            <option value="{{ category.pk }}">{{ category.name }}</option>
+        {% endfor %}
+    </select>
+    <br><br>
     
       <label for="name">Title:</label>
       <input type="text" id="name" name="name"><br><br>
@@ -44,7 +51,7 @@
   
 
       <button type="submit">submit</button>
-
+  </div>
 
     </form>
 

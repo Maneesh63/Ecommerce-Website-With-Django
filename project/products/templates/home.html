@@ -8,59 +8,69 @@
   
 {% block content %}
 
-   {% if messages %}
-
-      {% for message in messages %}
-
-      {{message}}
-
-     {% endfor %}
-
-   {% endif %}
-
+{% if messages %}
+<div class="row">
+    <div class="col-md-12">
+        {% for message in messages %}
+        <div class="alert alert-info alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endif %}
 
   <!--FOR LISTING PRODUCTS--> 
-  
-  
- <form action="{% url 'home' %}" method="get"> 
+  <form action="{% url 'home' %}" method="get"> 
 
-  <input type="text" id="search" name="query" placeholder="Search products....." required>
+  <div class="container h-100">
+    <div class="d-flex justify-content-center h-100">
+      <div class="search">
+  
+ 
+  <input class="search_input" type="text" name="query" placeholder="Search products....." required>
       
-  <button type="submit" class="btn btn-outline-success">Search</button>
-
+  <button class="search_icon"><i class="fa fa-search"></i></button>
 </form>
+</div>
+</div>
+</div>
           
   <ul>
- 
+    <div class="master">
   
-    {% if search %}
+    {% if products %}
     <div class="product-grid">
         {% for product in page_obj %}
              
-        <div class="product-card">
-                
-                <div class="product-tumb">
+         
+    <div class="card">
+      {% if product.image %}
+      <img src="{{ product.image.url }}"  alt="Not Available">
+      {% endif %}
 
-                  {% if product.image %}
-                  <img src="{{ product.image.url }}" style="height: 300px;width:300px;" alt="No image">
-                  {% endif %}
-                </div>
-                <div class="product-details">
-                  <span class="product-catagory">Pots</span>
-                  <h4><a href="{% url 'product_detail' pk=product.pk %}">{{ product.name }}</a></h4>
-                  <p>{{ product.description }} </p>
-                  <div class="product-bottom-details">
-                    <div class="product-price"><small>{{ product.orginal_price }}</small>{{ product.discounted_price }}</div>
-                    <div class="product-links">
-                      
-                    </div>
-                  </div>
-                </div>
-              </div>
+      <a href="{% url 'product_detail' product.pk %}">
+      <div class="content">
+          <div class="title">{{ product.name }}</div>
+          <div class="price">{{ product.discounted_price }}</div>
+          <div class="description">{{ product.description }}</div>
+          <div class="rating">
+              <span class="star">⭐</span>
+              <span>4.5</span>
+          </div>
+        </a>
+          <a href="{% url 'add_cart' product.pk %}" class="add-to-cart">Add to Cart</a>
+      </div>
+  </div>
+
         {% endfor %}
     </div>
     {% endif %} 
-
+  
+  </div>
     
 <div class="pagin">
 

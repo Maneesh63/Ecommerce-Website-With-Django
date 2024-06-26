@@ -1,0 +1,12 @@
+<form method="post">
+    {% csrf_token %}
+    <h3>Cart Items</h3>
+    <ul>
+        {% for item in cart_items %}
+            <li>{{ item.product.name }} - Quantity: {{ item.quantity }}</li>
+        {% endfor %}
+    </ul>
+    <h3>Address</h3>
+    <p>{{ address.address }}</p>
+    <button type="submit">Place Order</button>
+</form>

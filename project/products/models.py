@@ -49,6 +49,11 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     REQUIRED_FIELDS = ['username']
 
 
+
+class Categories(models.Model):
+      
+    name=models.CharField(max_length=300,default='pots',null=True)
+
 class Product(models.Model):
 
     user=models.ForeignKey(CustomUser,on_delete=models.CASCADE)
@@ -64,6 +69,10 @@ class Product(models.Model):
     discounted_price=models.DecimalField(max_digits=50,decimal_places=2)
 
     date=models.DateField(auto_now_add=True)
+
+    category=models.ForeignKey(Categories,on_delete=models.CASCADE,null=True)
+
+    
 
     update_at=models.DateField(auto_now_add=True,blank=True,null=True)
 
@@ -91,7 +100,7 @@ class Address(models.Model):
 
     user=models.ForeignKey(CustomUser,on_delete=models.CASCADE)
 
-    product=models.ForeignKey(Product,on_delete=models.CASCADE)
+    #product = models.ForeignKey(Product, on_delete=models.CASCADE)
 
     mobilenumber=models.CharField(max_length=15,default=9000,null=False,blank=False)
 
@@ -105,9 +114,15 @@ class Address(models.Model):
 
     date=models.DateField(auto_now_add=True)
 
+class Order(models.Model):
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    address = models.ForeignKey(Address, on_delete=models.CASCADE)
+    created_at = models.DateField(auto_now_add=True)
+    status = models.CharField(max_length=50, default='Pending')
 
-class Categories(models.Model):
-      
-    product=models.ForeignKey(Product,on_delete=models.CASCADE)
-
-    category=models.CharField(max_length=300,default='pots')
+class OrderItem(models.Model):
+    order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='items')
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField()
+    o_price = models.DecimalField(max_digits=10,default=10.00,decimal_places=2)
+    d_price= models.DecimalField(max_digits=10, decimal_places=2)

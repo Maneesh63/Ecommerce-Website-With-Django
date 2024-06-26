@@ -1,8 +1,8 @@
 from django.shortcuts import render,redirect,HttpResponseRedirect,HttpResponse,get_object_or_404
-from .forms import AddressForm,CustomUserForm,SearchForm,CommentForm,EditDashboardForm,EditproductForm,LoginForm,ProductForm,ForgotPasswordForm,ResetPasswordForm
+from .forms import CategoryForm,AddressForm,CustomUserForm,SearchForm,CommentForm,EditDashboardForm,EditproductForm,LoginForm,ProductForm,ForgotPasswordForm,ResetPasswordForm
 from django.contrib import messages
 from django.core.mail import send_mail
-from .models import CustomUser,Product,Comment,Cart
+from .models import CustomUser,Product,Comment,Cart,Categories,Address,Order,OrderItem
 from django.contrib.auth.tokens import default_token_generator
 from django.urls import reverse
 from urllib.parse import quote
@@ -13,23 +13,24 @@ from django.http import HttpResponseBadRequest
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth import login as auth_login,logout as auth_logout,authenticate
 from django.core.paginator import Paginator
- 
+from django.contrib.admin.views.decorators import staff_member_required 
 
 def home(request):
     products = Product.objects.all().order_by('-date')
-    search = SearchForm()
+    search_form = SearchForm()
+    query = ''
 
     if request.method == 'GET':
-        search = SearchForm(request.GET)
-        if search.is_valid():
-            query = search.cleaned_data['query']
-            search =Product.objects.filter(name__icontains=query)
+        search_form = SearchForm(request.GET)
+        if search_form.is_valid():
+            query = search_form.cleaned_data['query']
+            products =Product.objects.filter(name__icontains=query)
 
-    paginator = Paginator(products, 6)
+    paginator = Paginator(products, 10)
     page_num = request.GET.get('page')
     page_obj = paginator.get_page(page_num)
 
-    return render(request, 'home.html', {'products': products, 'search':search, 'page_obj': page_obj})
+    return render(request, 'home.html', {'products': products, 'search_form':search_form, 'page_obj': page_obj,query:request.GET.get('query','')})
 
 def signup(request):
 
@@ -55,7 +56,7 @@ def signup(request):
 
             email=user.email
 
-            subject = 'Welcome to our Test Authentication platform!'
+            subject = 'Welcome to our Test Potcart !'
             message = f'Hii {username}, Welcome! Thank you for registering with us. Complete your profile: Let the community know who you are! Add a profile picture and some information about yourself to personalize your account. Explore our features: Take some time to navigate through the platform and discover all the tools and resources available to you.'
             sender_email = 'maneeshmaneesh391@gmail.com'   
             
@@ -192,13 +193,25 @@ def create_product(request):
           
           product.user=request.user
 
+          selected_category = request.POST.get('category')
+
+          try:
+                selected_category = Categories.objects.get(pk=selected_category)
+          
+          except Categories.DoesNotExist:
+                messages.error(request, 'Invalid category selected. Please choose a valid category.')
+                return render(request, 'create_product.html', {'form': form})
+
+          product.category = selected_category
+
           product.save()
 
           messages.success(request,'Your product Created')
 
           return redirect('home')
-      
-  return render(request,'create_product.html',{'form':form})
+  else:
+    categories = Categories.objects.all()   
+  return render(request,'create_product.html',{'form':form,'categories':categories})
  
 
 def edit_product(request,pk):
@@ -206,6 +219,9 @@ def edit_product(request,pk):
     product=get_object_or_404(Product,pk=pk)
 
     form=EditproductForm(instance=product)
+
+    categories = Categories.objects.all()
+
 
     if request.method == 'POST':
         
@@ -222,24 +238,24 @@ def edit_product(request,pk):
 
          form=EditproductForm(instance=product)
  
-    return render(request,'edit_product.html',{'form':form,'product':product})
+    return render(request,'edit_product.html',{'form':form,'product':product,'categories':categories})
 
-def list_product(request):
-
-    product = Product.objects.all().order_by('-date')
-    search = SearchForm()
+def list_product(request,pk=None):
+ 
+    products = Product.objects.all().order_by('-date')
+    search_form = SearchForm()
 
     if request.method == 'GET':
-        search = SearchForm(request.GET)
-        if search.is_valid():
-            query = search.cleaned_data['query']
-            search =Product.objects.filter(name__icontains=query)
+        search_form = SearchForm(request.GET)
+        if search_form.is_valid():
+            query = search_form.cleaned_data['query']
+            products =Product.objects.filter(name__icontains=query)
 
-    paginator = Paginator(product, 6)
+    paginator = Paginator(products, 6)
     page_num = request.GET.get('page')
     page_obj = paginator.get_page(page_num)
 
-    return render(request,'list_product.html',{'product':product,'search':search, 'page_obj': page_obj})
+    return render(request,'list_product.html',{'products':products,'search_form':search_form, 'page_obj': page_obj,'query': request.GET.get('query', '')})
 
 
 def delete_product(request,pk):
@@ -281,7 +297,9 @@ def edit_dashboard(request):
             return redirect('dashboard')
         
     return render(request,'edit_dashboard.html',{'form':form})
+from django.contrib.auth.decorators import login_required
 
+@login_required
 def add_cart(request, pk):
 
     product = get_object_or_404(Product, pk=pk)
@@ -294,16 +312,68 @@ def add_cart(request, pk):
 
     return redirect('cart')
 
-
+@login_required(login_url='/login/')
 def list_cart(request):
 
     carts = Cart.objects.filter(user=request.user)
 
+    #address=Address.objects.filter(user=request.user)
     #total=sum(item.product.discounted_price * item.quantity for item in wishlist)
-
-    return render(request, 'wishlist.html', {'carts': carts})
+    if request.method == 'POST':
+        #product_ids = request.POST.getlist('product_ids')
+        #request.session['product_ids'] = product_ids
+        return redirect('address')  # Redirect 
     
-     
+
+    return render(request, 'cart.html', {'carts': carts})
+ 
+def address(request):
+    form=AddressForm()
+    if request.method == 'POST':
+        form = AddressForm(request.POST)
+        if form.is_valid():
+            address= form.save(commit=False)
+            address.user=request.user
+
+            address.save()
+
+            return redirect('create_order')
+        
+    return render(request,'address.html',{'form':form})
+
+#creating an order with cart products,address,user details
+@login_required
+def create_order(request):
+    cart_items = Cart.objects.filter(user=request.user)
+    address = Address.objects.filter(user=request.user).first()
+
+    if request.method == 'POST':
+        if address:
+            order = Order.objects.create(user=request.user, address=address)
+            for item in cart_items:
+                OrderItem.objects.create(order=order, product=item.product, quantity=item.quantity,o_price=item.product.orginal_price,d_price=item.product.discounted_price,)
+            cart_items.delete()
+            return redirect('order_detail',pk=order.pk)
+        else:
+            return redirect('address')
+
+    return render(request, 'create_order.html', {'cart_items': cart_items, 'address': address})
+
+@login_required
+def order_detail(request,pk):
+
+    order=get_object_or_404(Order,pk=pk,user=request.user)
+
+    order_items = OrderItem.objects.filter(order=order)
+    return render(request, 'order_detail.html', {'order': order,'order_items':order_items})
+
+
+
+def order_history(request):
+
+     orders=Order.objects.filter(user=request.user)
+     return render(request, 'order_history.html', {'orders': orders})
+
 def remove_cart(request,pk):
 
     cart=get_object_or_404(Cart,pk=pk)
@@ -361,33 +431,7 @@ def delete_comment(request,pk):
 
     return redirect('product_detail ')
 
-
-
-def address(request,pk):
-
-    product=get_object_or_404(Product,pk=pk)
-
-    form=AddressForm()
-
-    if request.method == 'POST':
-
-        form=AddressForm(request.POST)
-
-        if form.is_valid():
-
-              address=form.save(commit=False)
-           
-              address.user=request.user
-
-              address.product=product
-
-              address.save()
-
-              return redirect('payment',pk=product.pk)
-            
-    return render(request,'address.html',{'product':product,'form':form})
-
-
+'''
 def common(request):
 
     form=SearchForm()
@@ -405,7 +449,51 @@ def common(request):
             results=Product.objects.filter(name__icontains=query)
 
             
-            return render(request,'common.html',{'form':form,'results':results,'query':query})
+  
+    return render(request,'common.html',{'form':form,'results':results,'query':query})
+'''
+     
+
+@staff_member_required
+def create_category(request):
+  if request.method == 'POST':
+    form = CategoryForm(request.POST)
+    if form.is_valid():
+      form.save()
+      return redirect('list')  # Replace with your category list URL
+  else:
+    form = CategoryForm()
+  context = {'form': form}
+  return render(request, 'create_category.html', context)
+
+
+def list_category(request):
+
+      categories = Categories.objects.all()
+      
+      context={'categories':categories}
+      return render(request,'category.html',context)
+
+
+def delete_category(request,pk):
+
+    categories=get_object_or_404(Categories,pk=pk)
+
+    categories.delete()
+
+    return redirect('category')
+
+
+def list_product_by_category(request,pk):
+
+    category=get_object_or_404(Categories,pk=pk)
+
+    products=Product.objects.filter(category=category)
+
+    return render(request,'list_category_product.html',{'category':category,'products':products})
+ 
+
+
 
 
 
@@ -415,7 +503,6 @@ def initiate_payment(request, pk):
     if request.method == 'GET':
         product = get_object_or_404(Product, pk=pk)
         amount = float(product.discounted_price * 100)
-
         request.session['payment_amount'] = amount
         currency = 'INR'
 
@@ -442,14 +529,11 @@ def initiate_payment(request, pk):
 
 @csrf_exempt
 def paymenthandler(request):
-    if request.method not in ['GET', 'POST']:
-        return HttpResponseBadRequest('Invalid request method.')  # Early exit for invalid methods
-
-    try:
+    if request.method == 'POST':
         amount = request.session.get('payment_amount', 0)
-        payment_id = request.GET.get('razorpay_payment_id', '')
-        razorpay_order_id = request.GET.get('razorpay_order_id', '')
-        signature = request.GET.get('razorpay_signature', '')
+        payment_id = request.POST.get('razorpay_payment_id', '')
+        razorpay_order_id = request.POST.get('order_id', '')
+        signature = request.POST.get('razorpay_signature', '')
 
         params_dict = {
             'razorpay_order_id': razorpay_order_id,
@@ -457,25 +541,20 @@ def paymenthandler(request):
             'razorpay_signature': signature
         }
 
-        # Verify payment signature (ensure correct order of parameters)
-        verification_result = razorpay_client.utility.verify_payment_signature(params_dict)
-        print("Verification Result:", verification_result)
+        try:
+            verification_result = razorpay_client.utility.verify_payment_signature(params_dict)
+           
+            if verification_result is not None:
 
-        razorpay_order = request.context.get('razorpay_order')
-        if razorpay_order:  # Add the missing colon
-            # Access order details from razorpay_order dictionary
-            if 'payment_capture' not in razorpay_order:
                 capture_response = razorpay_client.payment.capture(payment_id, amount)
-                print("Capture Response:", capture_response)
-                return render(request, 'payment_success.html')
+
+                return render(request, 'payment_success.html',capture_response)
             else:
-                print("Payment already captured")
-                return render(request, 'payment_success.html')
-
-        else:
-            print("Verification Failed")
+                return HttpResponse('Payment verification failed')
+        except razorpay.errors.SignatureVerificationError:
             return HttpResponse('Payment verification failed')
-
-    except Exception as e:
-        print("Error:", e)  # Log the error for debugging
-        return HttpResponseBadRequest('An error occurred during payment processing.')
+        except Exception as e:
+            print("Error:", e)  # Log the error for debugging
+            return HttpResponseBadRequest('An error occurred during payment processing.')
+    else:
+        return HttpResponseBadRequest('Invalid request method.')

@@ -1,0 +1,101 @@
+{% extends 'common.html' %}
+
+{% load static %}
+ 
+{% block title %}CART{% endblock %}
+
+{% block styles %} <link rel="stylesheet" href="{% static 'cart.css' %}">{% endblock %}
+  
+{% block content %}
+ 
+   
+
+
+ {% if carts %} 
+    
+<div class="product-grid">
+        {% for cart in carts %}
+            <div class="card">
+                {% if cart.product.image %}
+                    <img src="{{ cart.product.image.url }}" alt="Not Available">
+                {% endif %}
+                <a href="{% url 'product_detail' cart.product.pk %}">
+                    <div class="content">
+                        <div class="title">{{ cart.product.name }}</div>
+                        <div class="price">{{ cart.product.discounted_price }}</div>
+                        <div class="description">{{ cart.product.description }}</div>
+                        <div class="rating">
+                            <span class="star">⭐</span>
+                            <span>4.5</span>
+                        </div>
+                        <div class="product-links">
+                            <a class="quantity-action" data-action="increase" data-pk="{{ cart.pk }}" href="{% url 'increase_quantity' cart.pk %}">+</a>
+                            <a class="quantity" data-price="{{ cart.product.discounted_price }}" id="quantity{{ cart.pk }}">{{ cart.quantity }}</a>
+                            <a class="quantity-action" data-action="decrease" data-pk="{{ cart.pk }}" href="{% url 'decrease_quantity' cart.pk %}">-</a>
+                            <a href="{% url 'remove_cart' cart.pk %}"><i class="fa fa-trash"></i></a>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+    
+  <p id="total">Total :{{ total }}</p>
+   
+  <form method="post" action="{% url 'cart' %}">
+    {% csrf_token %}
+   
+    {% for cart in carts %}
+        <input type="hidden" name="product_ids" value="{{ cart.product.pk }}">
+    {% endfor %}
+    
+    <button type="submit">Proceed to Address</button>
+  {% else %}
+
+  <p>Nothing in it</p>
+
+   
+
+  {% endif %}
+  
+ 
+
+ 
+    <script>
+
+      document.querySelectorAll('.quantity-action').forEach(item => {
+        item.addEventListener('click', function(event) {
+        event.preventDefault();
+        const pk = this.getAttribute('data-pk'); 
+        const action = this.getAttribute('data-action');
+        const url = (action === 'increase') ? `/increase_quantity/${pk}/` : `/decrease_quantity/${pk}/`;
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById(`quantity${pk}`).innerText = data.quantity;
+                Updatetotal();
+            });
+    });
+    
+  });
+ 
+  function Updatetotal(){
+    const quantities = document.querySelectorAll('.quantity');
+    let total = 0;
+  
+    quantities.forEach(item => {
+       const price = parseFloat(item.getAttribute('data-price'));
+
+       const quantityValue = parseInt(item.innerText);
+       
+       total += price * quantityValue;
+    });
+  
+    document.getElementById('total').innerText = 'Total $:' + total.toFixed(2); 
+  }
+  
+  Updatetotal(); // Call Updatetotal initially to calculate total on page load
+  
+    </script>
+
+{% endblock %}

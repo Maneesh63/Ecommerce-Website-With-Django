@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import CustomUser,Product,Comment,Address
+from .models import CustomUser,Product,Comment,Address,Categories
 
 
 class CustomUserForm(forms.ModelForm):
@@ -19,7 +19,7 @@ class ProductForm(forms.ModelForm):
 
     class Meta:
 
-        fields=['name','description','image','orginal_price','discounted_price']
+        fields=['category','name','description','image','orginal_price','discounted_price']
         model=Product
        
         image=forms.ImageField(required=False)
@@ -47,7 +47,7 @@ class EditproductForm(forms.ModelForm):
 
     class Meta:
         model = Product
-        fields = ['name', 'description', 'image', 'orginal_price', 'discounted_price']
+        fields = ['category','name', 'description', 'image', 'orginal_price', 'discounted_price']
 
 
 class EditDashboardForm(forms.ModelForm):
@@ -65,15 +65,16 @@ class CommentForm(forms.ModelForm):
 
 
 class AddressForm(forms.ModelForm):
-
+    mobilenumber = forms.CharField(label='Mobile Number', max_length=50)
     address = forms.CharField(label='Address', max_length=100)
     pincode = forms.CharField(label='Pincode', max_length=10)
     state = forms.CharField(label='State', max_length=50)
     city = forms.CharField(label='City', max_length=50)
+    
 
     class Meta:
 
-        fields=['address','pincode','state','city']
+        fields=['mobilenumber','address','pincode','state','city']
         model=Address
 
 
@@ -81,3 +82,9 @@ class SearchForm(forms.Form):
 
     query=forms.CharField(label='Search', max_length=200)
  
+
+ 
+class CategoryForm(forms.ModelForm):
+  class Meta:
+    model = Categories
+    fields = ['name']
