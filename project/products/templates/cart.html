@@ -39,7 +39,7 @@
             </div>
         {% endfor %}
     </div>
-    
+    <div class="container"> 
   <p id="total">Total :{{ total }}</p>
    
   <form method="post" action="{% url 'cart' %}">
@@ -49,12 +49,13 @@
         <input type="hidden" name="product_ids" value="{{ cart.product.pk }}">
     {% endfor %}
     
-    <button type="submit">Proceed to Address</button>
+    <button type="submit" class="custom-button">Proceed</button></form>
+    
   {% else %}
 
   <p>Nothing in it</p>
 
-   
+    </div>
 
   {% endif %}
   

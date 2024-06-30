@@ -14,6 +14,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth import login as auth_login,logout as auth_logout,authenticate
 from django.core.paginator import Paginator
 from django.contrib.admin.views.decorators import staff_member_required 
+from django.contrib.auth.decorators import login_required 
 
 def home(request):
     products = Product.objects.all().order_by('-date')
@@ -297,7 +298,7 @@ def edit_dashboard(request):
             return redirect('dashboard')
         
     return render(request,'edit_dashboard.html',{'form':form})
-from django.contrib.auth.decorators import login_required
+ 
 
 @login_required
 def add_cart(request, pk):
@@ -326,6 +327,14 @@ def list_cart(request):
     
 
     return render(request, 'cart.html', {'carts': carts})
+
+
+def remove_cart(request,pk):
+
+    cart=get_object_or_404(Cart,pk=pk)
+    cart.delete()
+    return redirect('cart')
+
  
 def address(request):
     form=AddressForm()
@@ -373,13 +382,7 @@ def order_history(request):
 
      orders=Order.objects.filter(user=request.user)
      return render(request, 'order_history.html', {'orders': orders})
-
-def remove_cart(request,pk):
-
-    cart=get_object_or_404(Cart,pk=pk)
-    cart.delete()
-    return redirect('cart')
-
+ 
 
 def increase_quantity(request, pk):
     cart_item= get_object_or_404(Cart, pk=pk)

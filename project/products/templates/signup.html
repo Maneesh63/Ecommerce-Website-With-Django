@@ -11,6 +11,8 @@
     
 {% block content %}
  
+<div class="fm">
+
 <form method="post" class="was-validated" action="{% url 'signup' %}">
 
     {% if messages %}
@@ -45,6 +47,7 @@
   
   </form>
   
+<div class="fm">
   <script>
     function showpassword() {
       var pas = document.getElementById('password');

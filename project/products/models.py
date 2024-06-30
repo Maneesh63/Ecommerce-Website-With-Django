@@ -71,9 +71,7 @@ class Product(models.Model):
     date=models.DateField(auto_now_add=True)
 
     category=models.ForeignKey(Categories,on_delete=models.CASCADE,null=True)
-
     
-
     update_at=models.DateField(auto_now_add=True,blank=True,null=True)
 
 class Cart(models.Model):

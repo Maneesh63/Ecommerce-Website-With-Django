@@ -1,9 +1,11 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Create Category</title>
-</head>
-<body>
+{% extends 'common.html' %}
+
+{% load static %}
+ 
+{% block title %}Create Category{% endblock %}
+
+{% block content %}
+
   <h1>Create Category</h1>
   <form method="post" action="{% url 'create_category' %}">
 
@@ -13,5 +15,5 @@
     
     <button type="submit">Create</button>
   </form>
-</body>
-</html>
+ 
+  {% endblock %}

@@ -9,7 +9,7 @@ body{
     
     text-decoration: none;
     list-style: none;
-     
+    
     background-image: url("images/2532973.jpg"); 
 }
 .tp nav{  
@@ -18,10 +18,10 @@ body{
     justify-content: space-around;
     align-items: center;
     height: 10vh;
-    background-color: rgb(99, 96, 96);
+    background-color: rgb(255, 255, 255);
     border-radius: 50px;
     margin: 1rem 2rem 2rem 2rem;
-    color: aliceblue;
+    color: rgb(0, 0, 0);
     
     
 }
@@ -48,7 +48,7 @@ a, .btn{
 }
 nav ul li a{
     font-family:Arial, Helvetica, sans-serif;
-    color: white;
+    color: rgb(0, 0, 0);
 }
 
 nav ul li a:hover{
@@ -74,7 +74,7 @@ nav ul li a:hover{
     height: 24px;
     width: 30px;
     cursor: pointer;
-    margin-left: 9rem;
+    margin-left: 8rem;
 }
 .hamburger-icon span{
     width: 100%;

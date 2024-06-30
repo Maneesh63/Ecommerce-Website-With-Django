@@ -11,12 +11,14 @@ urlpatterns=[
 
     path('logout/',views.logout,name='logout'),
 
-    path('create_product/',views.create_product,name='create_product'),
-
-    path('forgot_password/',views.forgotpassword,name='forgot_password'),
+     path('forgot_password/',views.forgotpassword,name='forgot_password'),
 
     path('reset_password/',views.reset_password,name='reset_password'),
 
+
+    path('create_product/',views.create_product,name='create_product'),
+
+    
     path('edit_product/<int:pk>/',views.edit_product,name='edit_product'),
 
     path('delete_product/<int:pk>/',views.delete_product,name='delete_product'),
@@ -56,8 +58,7 @@ urlpatterns=[
     
     #path('common/',views.common,name='common'),
 
-     path('create_order/', views.create_order, name='create_order'),
-
+     
      path('create_category/',views.create_category,name='create_category'),
 
      path('category',views.list_category,name='category'),
@@ -67,10 +68,11 @@ urlpatterns=[
       path('categories/<int:pk>/products/',views.list_product_by_category, name='list_products_by_category'),
         
      #path('redirect_to_address/', views.redirect_to_address, name='redirect_to_address'),
-      
+      path('create_order/', views.create_order, name='create_order'),
+
       path('order_detail/<int:pk>/', views.order_detail, name='order_detail'),
     
-     path('order_history/', views.order_history, name='order_history'),
+      path('order_history/', views.order_history, name='order_history'),
 ]
 
     

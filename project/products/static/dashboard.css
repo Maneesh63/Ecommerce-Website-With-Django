@@ -84,3 +84,49 @@ body {
 .card .add-to-cart:hover {
     background-color: #444;
 }
+
+ .user-info-container {
+            background-color: #f9f9f9; /* Light grey background */
+            padding: 20px; /* Padding around the container */
+            border: 1px solid #ddd; /* Light grey border */
+            border-radius: 8px; /* Rounded corners */
+            box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+            text-align: center; /* Center the text inside the container */
+           
+            margin: 0 auto; /* Center the container horizontally */
+            font-family: Arial, sans-serif; /* Font family */
+            margin-bottom: 2rem;
+        }
+
+        .user-info {
+            font-size: 18px; /* Font size for user info */
+            color: #333; /* Dark text color */
+            margin: 10px 0; /* Margin between user info elements */
+        }
+
+        .user-actions {
+            list-style-type: none; /* Remove bullet points from list */
+            padding: 0; /* Remove padding from list */
+            margin-top: 20px; /* Margin above the list */
+        }
+
+        .user-actions li {
+            margin: 10px 0; /* Margin between list items */
+        }
+
+        .user-actions a {
+            text-decoration: none; /* Remove underline from links */
+            color: #4CAF50; /* Green link color */
+            font-size: 16px; /* Font size for links */
+            display: flex; /* Use flexbox for alignment */
+            align-items: center; /* Center icon and text vertically */
+            margin-left: 45rem;
+        }
+
+        .user-actions a:hover {
+            color: #45a049; /* Darker green on hover */
+        }
+
+        .user-actions i {
+            margin-right: 8px; /* Space between icon and text */
+        }

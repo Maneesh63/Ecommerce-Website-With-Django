@@ -25,22 +25,23 @@
 {% endif %}
 
   {% if user %}
-
-<p>{{ user.username }}</p>
-
-  <p>{{ user.email }}</p>
-
+  <div class="user-info-container">
+    <p class="user-info">{{ user.username }}</p>
+    <p class="user-info">{{ user.email }}</p>
  {% endif %}
 
  
 {% if request.user %}
 
-<li ><a href="{% url 'edit_dashboard' %}"><i class="fas fa-edit"></i>Edit</a></li>
-
-<li><a href="{% url 'logout' %}"><i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
+<ul class="user-actions">
+    <li><a href="{% url 'edit_dashboard' %}"><i class="fas fa-edit"></i>Edit</a></li>
+    <li><a href="{% url 'logout' %}"><i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
+</ul>
+<p>Your Products</p>  
+</div>
 {% endif %}
 
-
+ 
 {% if product %}
 
 <div class="product-grid">
@@ -49,7 +50,7 @@
    
     <div class="card">
         {% if products.image %}
-        <img src="{{ products.image.url }}"  alt="Not Available">
+        <img src="{{ products.image.url }}" style="height: 280px; width:300px"  alt="Not Available">
         {% endif %}
   
         <a href="{% url 'product_detail' products.pk %}">

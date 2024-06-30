@@ -1,11 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
+{% extends 'common.html' %}
+
+{% load static %}
+ 
+{% block title %}Address{% endblock %}
+
+
+{% block styles %} 
+
+<link rel="stylesheet" href="{% static 'address.css' %}"> 
+
+{% endblock %}
+
+{% block content %}
+
     <form method="post" action="{% url 'address' %}">
      
         
@@ -33,13 +40,5 @@
         <button id="address" type="submit">Continue</button>
 
     </form>
-<script>
-    document.getElementById('address').addEventListener('submit', function(event) {
-        event.preventDefault();  
-        this.submit();
-        window.location.href = '/payment/' + address.pk + '/';
-        
-    });
-</script>
-</body>
-</html>
+
+ {% endblock %}

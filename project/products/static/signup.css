@@ -1,12 +1,4 @@
-form{
-
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    margin-left: 25rem;
-    
-}
-
-
-form {
+.fm form {
     max-width: 400px;
     margin: 4rem auto;
     background-color: #fff;
@@ -18,22 +10,26 @@ form {
 }
  
  
-button[type='submit']{
-   
+.fm button[type='submit']{
+   font-size: 16px;
     margin-top: 14px;
     width: 100%;
 }  
 
  
-.sig{
-
+.fm .sig{
+    
     margin: 1rem 0 0 2.5rem;
    display: flex;
    }
    
-   .sign{
+.fm .sig a{
+    font-size: 16px;
+}
+
+.fm  .sign{
        text-decoration: underline;
    }
-   .sig p{
+ .fm  .sig p{
    margin-right: 0.3rem;
    } 
