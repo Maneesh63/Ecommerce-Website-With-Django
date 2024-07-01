@@ -27,7 +27,7 @@ def home(request):
             query = search_form.cleaned_data['query']
             products =Product.objects.filter(name__icontains=query)
 
-    paginator = Paginator(products, 10)
+    paginator = Paginator(products, 8)
     page_num = request.GET.get('page')
     page_obj = paginator.get_page(page_num)
 

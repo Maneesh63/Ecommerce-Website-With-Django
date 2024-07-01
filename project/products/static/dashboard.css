@@ -11,7 +11,7 @@ body {
 
 .product-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 20px;
     width: 100%;
     max-width: 1200px;
@@ -130,3 +130,18 @@ body {
         .user-actions i {
             margin-right: 8px; /* Space between icon and text */
         }
+
+
+        
+
+@media screen and (max-width: 1200px) { 
+
+    .card{
+    
+        margin: 1rem 0 0 3rem;
+    }
+    .user-info-container {
+
+        margin-top: 3rem;    }
+    
+    }

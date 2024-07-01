@@ -24,6 +24,7 @@ body {
     overflow: hidden;
     background-color: white;
     width: 18.5rem;
+    
 }
 
 .card img {
@@ -137,4 +138,13 @@ body {
 
 .custom-button:hover {
     background-color: #45a049; /* Darker green on hover */
+}
+
+
+@media screen and (max-width: 1200px) { 
+
+.card{
+    margin: 3rem 0 0 3rem;
+}
+
 }
