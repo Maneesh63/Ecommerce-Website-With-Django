@@ -5,26 +5,107 @@
 {% block title %}Address{% endblock %}
 
 
+<div class="bo">
 {% block styles %} 
 
-<link rel="stylesheet" href="#"> 
+<style>
+    .bo body {
+        font-family: Arial, sans-serif;
+        
+        background: transparent;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+    
+    .form-container {
+        
+        background: transparent;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+        margin-bottom: 3rem;
+        width: 60%;
+        max-width: 800px;
+        margin-left: 20rem;
+    }
+    
+    .form-container h3 {
+        text-align: center;
+        margin-bottom: 20px;
+        color: #333;
+    }
+    
+    .form-container ul {
+        list-style-type: none;
+        padding: 0;
+    }
+    
+    .form-container ul li {
+        margin-bottom: 10px;
+        font-size: 16px;
+    }
+    
+    .form-container img {
+        display: block;
+        margin: 0 auto 10px;
+    }
+    
+    .address {
+        margin-top: 20px;
+        padding: 15px;
+        background-color: #f1f1f1;
+        border-radius: 5px;
+        text-align: center;
+    }
+    
+    button {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+        margin-top: 20px;
+    }
+    
+    button:hover {
+        background-color: #0056b3;
+    }
+    
+   
+</style>
+
 
 {% endblock %}
 
 {% block content %}
- 
+<div class="form-container">
+    <form method="post">
+        {% csrf_token %}
+        <h3>Confirm Your Order</h3>
+        <ul>
+            {% for item in cart_items %}
+                {% if item.product.image %}
+                    <img style="width: 300px; height: 300px" src="{{ item.product.image.url }}" class="img-fluid" alt="{{ item.product.name }}">
+                {% endif %}
+                <li>{{ item.product.name }}</li>
+                <li>Quantity: {{ item.quantity }}</li>
+            {% endfor %}
+        </ul>
+        <h3>Address</h3>
+        <div class="address">
+            <p>{{ address.address }}, {{ address.state }}, {{ address.city }}, {{ address.pincodes }}</p>
+        </div>
+        <button type="submit">Place Order</button>
+    </form>
+</div>
 
-<form method="post">
-    {% csrf_token %}
-    <h3>Cart Items</h3>
-    <ul>
-        {% for item in cart_items %}
-            <li>{{ item.product.name }} - Quantity: {{ item.quantity }}</li>
-        {% endfor %}
-    </ul>
-    <h3>Address</h3>
-    <p>{{ address.address }}</p>
-    <button type="submit">Place Order</button>
-</form>
-
+</div>
 {% endblock %}

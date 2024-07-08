@@ -26,7 +26,8 @@
           <span class="star">⭐</span>
           <span>4.5</span>
       </div>
-      <a href="{% url 'payment' pk=product.pk %}" class="add-to-cart">Buy Now</a>
+      
+      <a href="{% url 'add_cart' product.pk %}" class="add-to-cart">Add to Cart</a>
     </div>
   
     <div class="ext">

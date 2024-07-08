@@ -99,6 +99,9 @@ def login(request):
               messages.success(request,'Youre Back!')
 
               return redirect('home')
+            
+            else:
+                messages.error(request,'Email or passsord is wrong')
         
     return render(request,'login.html',{'form':form})
 
@@ -318,11 +321,10 @@ def list_cart(request):
 
     carts = Cart.objects.filter(user=request.user)
 
-    #address=Address.objects.filter(user=request.user)
+     
     #total=sum(item.product.discounted_price * item.quantity for item in wishlist)
     if request.method == 'POST':
-        #product_ids = request.POST.getlist('product_ids')
-        #request.session['product_ids'] = product_ids
+         
         return redirect('address')  # Redirect 
     
 

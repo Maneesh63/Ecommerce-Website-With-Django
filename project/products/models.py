@@ -113,14 +113,23 @@ class Address(models.Model):
     date=models.DateField(auto_now_add=True)
 
 class Order(models.Model):
+
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+
     address = models.ForeignKey(Address, on_delete=models.CASCADE)
+
     created_at = models.DateField(auto_now_add=True)
+
     status = models.CharField(max_length=50, default='Pending')
 
 class OrderItem(models.Model):
+    
     order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='items')
+
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
+
     quantity = models.PositiveIntegerField()
+
     o_price = models.DecimalField(max_digits=10,default=10.00,decimal_places=2)
+
     d_price= models.DecimalField(max_digits=10, decimal_places=2)
