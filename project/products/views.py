@@ -276,7 +276,7 @@ def product_detail(request,pk):
 
 def dashboard(request):
     
-    user= request.user
+    user = request.user
     
     product=Product.objects.filter(user=user).order_by('-date')
 
