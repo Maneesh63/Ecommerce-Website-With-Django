@@ -135,7 +135,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 #databse configuration
- 
+'''
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
@@ -148,6 +148,18 @@ DATABASES = {
 
     }
 }
+'''
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'ecomm',   
+        'USER': 'Maneesh632',
+        'PASSWORD': '632765',   
+        'HOST': 'Maneesh632.mysql.pythonanywhere-services.com',
+        'PORT': '3306',   
+    }
+}
+
 
 AUTHENTICATION_BACKENDS=['products.backends.EmailBackend']
 
@@ -180,9 +192,9 @@ CSRF_COOKIE_SAMESITE = 'None'
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
 
-RAZOR_KEY_ID ='rzp_test_jBCI7CmPTKbPgK'
+#RAZOR_KEY_ID ='rzp_test_jBCI7CmPTKbPgK'
 
-RAZOR_KEY_SECRET = '7PLsOgJRFagkjXFNqrdJ9roV'
+#RAZOR_KEY_SECRET = '7PLsOgJRFagkjXFNqrdJ9roV'
 
 
 

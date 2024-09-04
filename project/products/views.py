@@ -7,7 +7,7 @@ from django.contrib.auth.tokens import default_token_generator
 from django.urls import reverse
 from urllib.parse import quote
 from django.http import JsonResponse
-import razorpay
+#import razorpay
 from django.conf import settings
 from django.http import HttpResponseBadRequest
 from django.views.decorators.csrf import csrf_exempt
@@ -500,7 +500,7 @@ def list_product_by_category(request,pk):
 
 
 
-
+'''
 
 razorpay_client = razorpay.Client(auth=(settings.RAZOR_KEY_ID, settings.RAZOR_KEY_SECRET))
 
@@ -563,3 +563,5 @@ def paymenthandler(request):
             return HttpResponseBadRequest('An error occurred during payment processing.')
     else:
         return HttpResponseBadRequest('Invalid request method.')
+
+        '''
