@@ -52,12 +52,13 @@ urlpatterns=[
 
     #path('order_details/',views.order_details,name='order_details'),
 
-    path('payment/<int:pk>/',views.initiate_payment,name='payment'),
+    #path('payment/<int:pk>/',views.initiate_payment,name='payment'),
 
-    path('payment/success/', views.paymenthandler,name='payment_success'),
+    #path('payment/success/', views.paymenthandler,name='payment_success'),
     
     #path('common/',views.common,name='common'),
 
+     
      
      path('create_category/',views.create_category,name='create_category'),
 
@@ -73,6 +74,8 @@ urlpatterns=[
       path('order_detail/<int:pk>/', views.order_detail, name='order_detail'),
     
       path('order_history/', views.order_history, name='order_history'),
+
+      
 ]
 
     
