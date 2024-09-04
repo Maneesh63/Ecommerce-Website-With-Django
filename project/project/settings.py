@@ -133,14 +133,29 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
- 
+
+#databse configuration
+'''
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'ecomm',
+        'USER': 'root',
+        'PASSWORD': '632765',
+        'HOST': 'localhost',   
+        'PORT': '3306',  
+         
+
+    }
+}
+'''
 
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'Maneesh632$default ', 
-        'USER': 'Maneesh632',
+        'NAME': 'Maneesh632$default', 
+        'USER': 'root',
         'PASSWORD': '632765',   
         'HOST': 'Maneesh632.mysql.pythonanywhere-services.com',
         'PORT': '3306',   
