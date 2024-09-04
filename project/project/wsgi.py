@@ -20,7 +20,7 @@ if project_home not in sys.path:
     sys.path.insert(0, project_home)
 
 # Set the Django settings module
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'ecom.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'Ecommerce-website-with-django.settings')
 
  
 application = get_wsgi_application()
