@@ -11,6 +11,16 @@ import os
 
 from django.core.wsgi import get_wsgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'project.settings')
+import os
+import sys
 
+# Add the project directory to the sys.path
+project_home = '/home/Maneesh632/Ecommerce-website-with-django'
+if project_home not in sys.path:
+    sys.path.insert(0, project_home)
+
+# Set the Django settings module
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'ecom.settings')
+
+ 
 application = get_wsgi_application()

@@ -13,20 +13,10 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 from pathlib import Path
 import pymysql
 import os
-import sys
+ 
 
 pymysql.install_as_MySQLdb()
-
-
-project_home='/home/Maneesh632/ecom'
-
-if project_home not in sys.path:
-
-  sys.path.insert(0,project_home)
-
-
-os.environ['DJANGO_SETTING_MODULE']='ecom.settings'
-
+ 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
