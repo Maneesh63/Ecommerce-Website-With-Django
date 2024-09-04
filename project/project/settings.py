@@ -38,7 +38,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-i@cgovc4k_@siz+lnteju(8eu)q6=uqfgrv3+s%)*9tcdc@ykg'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = [
    'Maneesh632.pythonanywhere.com'
@@ -133,28 +133,13 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-
-#databse configuration
-'''
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'ecomm',
-        'USER': 'root',
-        'PASSWORD': '632765',
-        'HOST': 'localhost',   
-        'PORT': '3306',  
-         
-
-    }
-}
-'''
+ 
 
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'Maneesh632$ecom', 
+        'NAME': 'Maneesh632$default ', 
         'USER': 'Maneesh632',
         'PASSWORD': '632765',   
         'HOST': 'Maneesh632.mysql.pythonanywhere-services.com',
