@@ -149,10 +149,12 @@ DATABASES = {
     }
 }
 '''
+
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'ecomm',   
+        'NAME': 'Maneesh632$ecom', 
         'USER': 'Maneesh632',
         'PASSWORD': '632765',   
         'HOST': 'Maneesh632.mysql.pythonanywhere-services.com',
