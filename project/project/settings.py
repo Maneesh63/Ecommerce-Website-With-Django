@@ -116,7 +116,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
@@ -148,7 +148,10 @@ DATABASES = {
         'USER': 'Maneesh632',
         'PASSWORD': 'firebase632765',   
         'HOST': 'Maneesh632.mysql.pythonanywhere-services.com',
-        'PORT': '3306',   
+        'PORT': '3306', 
+        'OPTIONS': {
+            'sql_mode': 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION',
+        },
     }
 }
 
