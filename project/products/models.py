@@ -54,6 +54,9 @@ class Categories(models.Model):
       
     name=models.CharField(max_length=300,default='pots',null=True)
 
+    def __str__(self) :
+        return self.name
+
 class Product(models.Model):
 
     user=models.ForeignKey(CustomUser,on_delete=models.CASCADE)
@@ -74,6 +77,10 @@ class Product(models.Model):
     
     update_at=models.DateField(auto_now_add=True,blank=True,null=True)
 
+    def __str__(self) :
+        return self.name
+
+
 class Cart(models.Model):
 
     user=models.ForeignKey(CustomUser,on_delete=models.CASCADE)
@@ -83,6 +90,10 @@ class Cart(models.Model):
     product=models.ForeignKey(Product,on_delete=models.CASCADE)
 
     date=models.DateField(auto_now_add=True,blank=True,null=True)
+
+    def __str__(self) :
+        return self.product.name + self.quantity
+
 
 
 class Comment(models.Model):
@@ -114,6 +125,10 @@ class Address(models.Model):
     city=models.CharField(max_length=500,null=False)
 
     date=models.DateField(auto_now_add=True)
+
+    def __str__(self) :
+        return self.address
+
 
 class Order(models.Model):
 
