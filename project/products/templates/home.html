@@ -7,10 +7,9 @@
 {% block styles %} <link rel="stylesheet" href="{% static 'home.css' %}">{% endblock %}
   
 {% block content %}
-
+ 
 {% if messages %}
-
-<marquee>Website on Testing Not an actual one</marquee>
+  
 <div class="row">
     <div class="col-md-12">
         {% for message in messages %}
