@@ -15,7 +15,7 @@ import os
 import sys
 
 # Add the project directory to the sys.path
-project_home = '/home/Maneesh632/Ecommerce-website-with-django/project/products'
+project_home = '/home/Maneesh632/Ecommerce-website-with-django'
 if project_home not in sys.path:
     sys.path.append(project_home)
 
